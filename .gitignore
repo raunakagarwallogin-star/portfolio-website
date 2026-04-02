@@ -1,0 +1,5 @@
+node_modules/
+/build
+ui-ux-pro-max-skill
+.DS_Store
+*.DS_Store
