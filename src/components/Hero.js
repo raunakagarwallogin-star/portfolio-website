@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import React, { useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import './Hero.css';
@@ -10,7 +11,6 @@ function PaintText({ className, children, motionProps, paintPhase, onPhaseChange
   const [whiteMask, setWhiteMask] = useState('');
   const prevPhase = useRef(paintPhase);
 
-  // Reset canvases when phase changes externally
   if (paintPhase !== prevPhase.current) {
     if (paintPhase === 'gradient') {
       gradCanvasRef.current = null;
@@ -70,7 +70,6 @@ function PaintText({ className, children, motionProps, paintPhase, onPhaseChange
     const y = e.clientY - rect.top;
 
     strokeCount.current++;
-    // Only check coverage every 10 strokes for performance
     const shouldCheck = strokeCount.current % 10 === 0;
 
     if (paintPhase === 'gradient') {
@@ -96,10 +95,8 @@ function PaintText({ className, children, motionProps, paintPhase, onPhaseChange
 
   return (
     <motion.span {...motionProps} className={`paint-wrapper ${className}-wrapper`} ref={ref} onMouseMove={handleMouseMove}>
-      {/* Layer 1: Original grey text (always there) */}
       <span className={className}>{children}</span>
 
-      {/* Layer 2: Gradient text revealed by spray */}
       {gradMask && (
         <span
           className={`${className} paint-overlay`}
@@ -115,7 +112,6 @@ function PaintText({ className, children, motionProps, paintPhase, onPhaseChange
         </span>
       )}
 
-      {/* Layer 3: White text revealed by spray (only in white phase) */}
       {whiteMask && (
         <span
           className={`${className} paint-overlay`}
@@ -171,114 +167,119 @@ export default function Hero({ activeTab, setActiveTab }) {
   };
 
   return (
-    <section className="hero">
-      <div className="hero-container">
-        <div className="hero-wrapper">
-          <PaintText
-            className="hero-heading"
-            paintPhase={paintPhase}
-            onPhaseChange={setPaintPhase}
-            motionProps={{
-              initial: { y: 200, opacity: 0 },
-              animate: { y: 0, opacity: 1 },
-              transition: { duration: 1, ease: [0.42, 0, 0.58, 1], delay: 0.4 },
-            }}
-          >
-            Hey, I'm Raunak, a Senior Product Designer with
-          </PaintText>
-          <PaintText
-            className="hero-subheading"
-            paintPhase={paintPhase}
-            onPhaseChange={setPaintPhase}
-            motionProps={{
-              initial: { y: 200, opacity: 0 },
-              animate: { y: 0, opacity: 1 },
-              transition: { duration: 1, ease: [0.42, 0, 0.58, 1], delay: 0.55 },
-            }}
-          >
-            7 years of experience crafting AI-first product experiences...
-          </PaintText>
-          <motion.div
-            className="hero-job"
-            initial={{ y: 140, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: [0.42, 0, 0.58, 1], delay: 1.6 }}
-          >
-            <div className="company-swap-container">
-              <AnimatePresence mode="wait">
-                {phase === 0 ? (
-                  <motion.div
-                    key="current"
-                    className="current-work"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
-                  >
-                    Currently building AI agents & governance tools at{' '}
-                    <span className="company-name intuit">Microsoft</span>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="previous"
-                    className="current-work razorpay"
-                    initial={{ y: 20, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -20, opacity: 0 }}
-                    transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
-                  >
-                    Previously at{' '}
-                    <span className="company-names-wrapper">
-                      <span className="company-names-gradient">Intuit</span>
-                      <span className="company-names-separator"> | </span>
-                      <span className="company-names-gradient">Razorpay</span>
-                      <span className="company-names-separator"> | </span>
-                      <span className="company-names-gradient">MakeMyTrip</span>
-                      <span className="company-names-separator"> | </span>
-                      <span className="company-names-gradient">StarTV Network (Disney)</span>
-                    </span>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </motion.div>
-          <motion.div
-            className="hero-bottom"
-            ref={bottomRef}
-            initial={{ y: -15, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: [0.42, 0, 0.58, 1], delay: 2.2 }}
-          >
-            <div className="hero-bottom-swap">
-              <div className="hero-bottom-item" style={arrowStyle}>
-                <a href="#projects">
-                  <img
-                    src="https://cdn.prod.website-files.com/62a9c118130e8b4c6d766b99/62d5be8733c8e15929de8e3b_Group%203762%20(1).png"
-                    alt="scroll down"
-                    className="arrow-icon"
-                  />
-                </a>
+    <>
+      <Helmet>
+        <meta name="description" content="Raunak Agarwal — Senior Product Designer with 7 years of experience crafting AI-first product experiences." />
+      </Helmet>
+      <section className="hero">
+        <div className="hero-container">
+          <div className="hero-wrapper">
+            <PaintText
+              className="hero-heading"
+              paintPhase={paintPhase}
+              onPhaseChange={setPaintPhase}
+              motionProps={{
+                initial: { y: 200, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                transition: { duration: 1, ease: [0.42, 0, 0.58, 1], delay: 0.4 },
+              }}
+            >
+              Hey, I'm Raunak, a Senior Product Designer with
+            </PaintText>
+            <PaintText
+              className="hero-subheading"
+              paintPhase={paintPhase}
+              onPhaseChange={setPaintPhase}
+              motionProps={{
+                initial: { y: 200, opacity: 0 },
+                animate: { y: 0, opacity: 1 },
+                transition: { duration: 1, ease: [0.42, 0, 0.58, 1], delay: 0.55 },
+              }}
+            >
+              7 years of experience crafting AI-first product experiences...
+            </PaintText>
+            <motion.div
+              className="hero-job"
+              initial={{ y: 140, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.42, 0, 0.58, 1], delay: 1.6 }}
+            >
+              <div className="company-swap-container">
+                <AnimatePresence mode="wait">
+                  {phase === 0 ? (
+                    <motion.div
+                      key="current"
+                      className="current-work"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
+                    >
+                      Currently building AI agents & governance tools at{' '}
+                      <span className="company-name intuit">Microsoft</span>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="previous"
+                      className="current-work razorpay"
+                      initial={{ y: 20, opacity: 0 }}
+                      animate={{ y: 0, opacity: 1 }}
+                      exit={{ y: -20, opacity: 0 }}
+                      transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
+                    >
+                      Previously at{' '}
+                      <span className="company-names-wrapper">
+                        <span className="company-names-gradient">Intuit</span>
+                        <span className="company-names-separator"> | </span>
+                        <span className="company-names-gradient">Razorpay</span>
+                        <span className="company-names-separator"> | </span>
+                        <span className="company-names-gradient">MakeMyTrip</span>
+                        <span className="company-names-separator"> | </span>
+                        <span className="company-names-gradient">StarTV Network (Disney)</span>
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
-              <div className="hero-bottom-item" style={labelStyle}>
-                <div className="work-tabs">
-                  <button
-                    className={`work-tab ${activeTab === 'casestudies' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('casestudies')}
-                  >
-                    <span className="tab-text">Case Studies</span>
-                  </button>
-                  <button
-                    className={`work-tab ${activeTab === 'other' ? 'active' : ''}`}
-                    onClick={() => setActiveTab('other')}
-                  >
-                    <span className="tab-text">Creative Lab</span>
-                  </button>
+            </motion.div>
+            <motion.div
+              className="hero-bottom"
+              ref={bottomRef}
+              initial={{ y: -15, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 1, ease: [0.42, 0, 0.58, 1], delay: 2.2 }}
+            >
+              <div className="hero-bottom-swap">
+                <div className="hero-bottom-item" style={arrowStyle}>
+                  <a href="#projects">
+                    <img
+                      src="https://cdn.prod.website-files.com/62a9c118130e8b4c6d766b99/62d5be8733c8e15929de8e3b_Group%203762%20(1).png"
+                      alt="scroll down"
+                      className="arrow-icon"
+                    />
+                  </a>
+                </div>
+                <div className="hero-bottom-item" style={labelStyle}>
+                  <div className="work-tabs">
+                    <button
+                      className={`work-tab ${activeTab === 'casestudies' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('casestudies')}
+                    >
+                      <span className="tab-text">Case Studies</span>
+                    </button>
+                    <button
+                      className={`work-tab ${activeTab === 'other' ? 'active' : ''}`}
+                      onClick={() => setActiveTab('other')}
+                    >
+                      <span className="tab-text">Creative Lab</span>
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

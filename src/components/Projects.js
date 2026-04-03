@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import PasswordGate from './PasswordGate';
@@ -58,6 +58,11 @@ function ProjectCard({ project, index, onGatedClick }) {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: '-100px' });
   const isEven = index % 2 === 0;
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  const handleDescClick = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <div className="project-section" ref={ref}>
@@ -75,9 +80,17 @@ function ProjectCard({ project, index, onGatedClick }) {
                   <h1 className="project-title">{project.title}</h1>
                 </div>
                 <div className="project-desc-wrap">
-                  <div className="project-desc">{project.desc}</div>
+                  <div 
+                    className={`project-desc ${isExpanded ? 'expanded' : 'truncated'}`}
+                    onClick={handleDescClick}
+                    role="button"
+                    tabIndex="0"
+                    onKeyPress={(e) => e.key === 'Enter' && handleDescClick()}
+                  >
+                    {project.desc}
+                  </div>
                 </div>
-                <div className="project-desc-wrap">
+                <div className="project-desc-wrap desktop-only">
                   <ProjectLink project={project} className="project-arrow" onGatedClick={onGatedClick}>
                     <img
                       src="https://cdn.prod.website-files.com/62a9c118130e8b4c6d766b99/62d7ee3743ff44c83a0599bb_Group%203784.svg"
@@ -120,9 +133,17 @@ function ProjectCard({ project, index, onGatedClick }) {
                   <h1 className="project-title">{project.title}</h1>
                 </div>
                 <div className="project-desc-wrap">
-                  <div className="project-desc">{project.desc}</div>
+                  <div 
+                    className={`project-desc ${isExpanded ? 'expanded' : 'truncated'}`}
+                    onClick={handleDescClick}
+                    role="button"
+                    tabIndex="0"
+                    onKeyPress={(e) => e.key === 'Enter' && handleDescClick()}
+                  >
+                    {project.desc}
+                  </div>
                 </div>
-                <div className="project-desc-wrap">
+                <div className="project-desc-wrap desktop-only">
                   <ProjectLink project={project} className="project-arrow" onGatedClick={onGatedClick}>
                     <img
                       src="https://cdn.prod.website-files.com/62a9c118130e8b4c6d766b99/62d7ee3743ff44c83a0599bb_Group%203784.svg"

@@ -78,6 +78,10 @@
   filter: brightness(200%);
 }
 
+.desktop-only {
+  display: block;
+}
+
 .arrow-svg {
   display: flex;
   justify-content: center;
@@ -167,9 +171,26 @@
   .project-desc {
     font-size: 14px;
     line-height: 24px;
+    cursor: pointer;
+  }
+  .project-desc.truncated {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .project-desc.expanded {
+    display: block;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
   }
   .project-desc-wrap {
     padding-top: 12px;
     padding-bottom: 12px;
+  }
+  .desktop-only {
+    display: none;
   }
 }
