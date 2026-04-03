@@ -33,7 +33,7 @@
   font-family: 'Poppins', sans-serif;
   font-size: 28px;
   font-weight: 300;
-  display: block;
+  display: inline;
   line-height: 1.3;
 }
 
@@ -49,7 +49,7 @@
   font-size: 28px;
   font-weight: 300;
   line-height: 1.3;
-  display: block;
+  display: inline;
 }
 
 /* Paint brush effect */
@@ -256,12 +256,14 @@
     font-size: 22px;
     line-height: 30px;
     padding-bottom: 0;
+    display: inline;
   }
   .hero-subheading {
     margin-top: 0;
     padding-top: 0;
     font-size: 22px;
     line-height: 30px;
+    display: inline;
   }
   .hero-job {
     line-height: 22px;
