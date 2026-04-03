@@ -52,6 +52,24 @@
   display: block;
 }
 
+.hero-heading-mobile,
+.hero-subheading-mobile {
+  display: none;
+}
+
+.hero-heading-desktop,
+.hero-subheading-desktop {
+  display: inline;
+}
+
+.current-work-mobile {
+  display: none;
+}
+
+.current-work-desktop {
+  display: inline;
+}
+
 /* Paint brush effect */
 .paint-wrapper {
   position: relative;
@@ -256,22 +274,41 @@
     font-size: 22px;
     line-height: 30px;
     padding-bottom: 0;
+    display: block;
+  }
+  .hero-heading-mobile {
     display: inline;
+  }
+  .hero-heading-desktop {
+    display: none;
   }
   .hero-subheading {
     margin-top: 0;
     padding-top: 0;
     font-size: 22px;
     line-height: 30px;
-    display: inline;
+    display: none;
+  }
+  .hero-subheading-mobile {
+    display: none;
+  }
+  .hero-subheading-desktop {
+    display: none;
   }
   .hero-job {
-    line-height: 22px;
+    line-height: 28px;
     margin-top: 60px;
     margin-bottom: 60px;
   }
   .current-work, .previous-work {
-    font-size: 16px;
+    font-size: 18px;
+    line-height: 28px;
+  }
+  .current-work-mobile {
+    display: inline;
+  }
+  .current-work-desktop {
+    display: none;
   }
   .hero-bottom {
     margin-top: 80px;
